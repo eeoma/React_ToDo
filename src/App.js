@@ -4,16 +4,16 @@ import "./App.css";
 export default class App extends Component {
   state= {
     todoData : [  //배열 안에 객체 삽입
-      {
+      /*{
         id: "1",
         title: "공부하기",
-        completed: true,
+        completed: false,
       },
       {
         id: "2",
         title: "청소하기",
         completed: false,
-      },
+      },*/
     ],
     value: "",
   };
@@ -28,13 +28,13 @@ export default class App extends Component {
     float: "right"
   }
 
-  getStyle=()=> {  //목록들 밑에 생기는 점선
+  getStyle=(completed)=> {  //목록들 밑에 생기는 점선
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: "none",
+      textDecoration: completed ? "line-through": "none",  //삼항 연산자의 이용
 
-    }
+    };
   }
 
   handleClick=(id)=> {   //state를 이용한 목록 삭제
@@ -59,9 +59,21 @@ export default class App extends Component {
         completed: false,
       };
       //원래 있던 할 일에 새로운 할 일 더해주기
-      this.setState({todoData: [...this.state.todoData,newTodo] });
+      this.setState({todoData: [...this.state.todoData,newTodo],value:""});
       //...this.state.todoData: 원래 있던 데이터들의 전개를 의미
+      // value: "" : 입력창을 다시 비워줌
   };
+
+  handleCompleteChange=(id)=> {  //완료한 일 밑줄 그어지기
+    let newTodoData=this.state.todoData.map(data=> {
+      if(data.id===id){
+        data.completed = !data.completed;  //completed 값을 false에서 true로 바꿔주는 것
+      }
+      return data;
+    })
+    this.setState({todoData: newTodoData});
+  }
+
 
   render(){
     return(
@@ -71,9 +83,11 @@ export default class App extends Component {
                 <h3>할 일 목록</h3>
             </div>
             {this.state.todoData.map((data)=> (   //react에서 list의 나열 시 key값을 사용함
-                <div style={this.getStyle()} key={data.id}> 
+                <div style={this.getStyle(data.completed)} key={data.id}> 
                 <p>    
-                <input type="checkbox" defaultChecked={false} />
+                <input type="checkbox" 
+                onChange={()=>this.handleCompleteChange(data.id)}  //체크박스 표시 됐을 때 줄 그어지는 이벤트
+                defaultChecked={false} />
                 {data.title}
                 <button style={this.btnStyle} onClick={()=>this.handleClick(data.id)}>x</button>
                 </p>
