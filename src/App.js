@@ -49,7 +49,7 @@ export default function App() {
         <div className="w-full p-6 m-4 bg-white rounded shadow-sm lg:w-3/4 lg:max-w-lg"> 
         {/*반응형- lg 사이즈일 때 75% width
           max-wix-width일 때 32rem을 넘지 않음*/} 
-            <div className="flex justify-between mb-3">
+            <div className="flex justify-between">
                 <h3>할 일 목록</h3>
             </div>
 
