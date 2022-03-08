@@ -1,4 +1,5 @@
 import React from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 export default function List({todoData,setTodoData}) {  //props로 필요한 데이터 함수 가져오기
 
@@ -22,8 +23,18 @@ export default function List({todoData,setTodoData}) {  //props로 필요한 데
 
   return (
     <div>
-        {todoData.map((data)=> (   //react에서 list의 나열 시 key값을 사용함
-          <div key={data.id}> 
+      <DragDropContext>
+        <Droppable droppableId="todo">
+        {provided=>(
+        <div {...provided.droppableProps} ref={provided.innerRef}>
+        {todoData.map((data,index)=> (   //react에서 list의 나열 시 key값을 사용함
+          <Draggable
+            key={data.id}  //map 속성 안에 있으므로 key 값을 가지고 있어야함
+            draggableId={data.id.toString()}
+            index={index}
+          >
+            {(provided,snapshot) => (
+          <div key={data.id} {...provided.draggableProps} ref={provided.innerRef}{...provided.dragHandleProps}> 
             <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-grey-600 bg-gray-100 border rounded"> 
               <div className="items-center">   
               <input type="checkbox" 
@@ -34,11 +45,19 @@ export default function List({todoData,setTodoData}) {  //props로 필요한 데
               </span>
               </div>
               <div className="items-center">
-              <button className="px-4 py-2 float-right" onClick={()=>handleClick(data.id)}>x</button>
+              <button className="px-4 py-2 float-right"
+               onClick={()=>handleClick(data.id)}>x</button>
               </div>
             </div>
           </div>
+            )}
+          </Draggable>
         ))}
+        {provided.placeholder}
+        </div>
+        )}
+        </Droppable>
+      </DragDropContext>
     </div>
   )
 }
