@@ -1,4 +1,6 @@
 import React from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 export default function List({todoData,setTodoData}) {  //props로 필요한 데이터 함수 가져오기
