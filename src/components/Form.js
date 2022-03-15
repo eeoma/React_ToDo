@@ -23,6 +23,6 @@ export default function Form({handleSubmit,value,setValue}) {
               type="submit" 
               value="입력"
               />
-            </form>
+        </form>
   );
 }

@@ -1,7 +1,7 @@
-import React, {useState} from "react";
 import "./App.css";
+import React, {useState} from "react";  //리액트 라이브러리에서 가져오는 것
 import Form from "./components/Form";
-import List from "./components/List";
+import List from "./components/Lists";
 
 export default function App() {
   /*state= {
@@ -24,6 +24,8 @@ export default function App() {
   //첫번째 인수는 변수 이름, 두번째 이름은 State를 정하는 함수
   const [todoData, setTodoData]=useState([]);
   const [value, setValue]=useState("");
+
+
 
   const handleSubmit=(e)=> {  //입력한 할 일 보이기 , event를 가져오므로 e를 사용
     e.preventDefault();
